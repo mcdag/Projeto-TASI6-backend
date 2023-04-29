@@ -1,0 +1,26 @@
+{
+  "name": "reportservice",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon src/server/index.ts --watch src/server",
+    "start:client": "nodemon src/client/index.ts --watch src/client",
+    "proto:build": "cd proto; buf build; cd ..",
+    "codegen:buf": "cd proto; buf generate; cd .."
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "grpc_tools_node_protoc_ts": "^5.3.3",
+    "grpc-tools": "^1.12.4",
+    "ts-node": "^10.9.1",
+    "typescript": "^5.0.4"
+  },
+  "dependencies": {
+    "@grpc/grpc-js": "^1.8.14",
+    "grpc": "^1.24.11",
+    "nodemon": "^2.0.22"
+  }
+}

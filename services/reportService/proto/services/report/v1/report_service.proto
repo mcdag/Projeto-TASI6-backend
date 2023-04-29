@@ -1,0 +1,36 @@
+syntax = "proto3";
+
+package services.report.v1;
+
+enum ReportType{
+  REPORT_TYPE_UNSPECIFIED = 0;
+  REPORT_TYPE_POUCA_ILUMINACAO = 1;
+  REPORT_TYPE_ASSEDIO = 2;
+  REPORT_TYPE_MATAGAL = 3;
+  REPORT_TYPE_ILUMINADO = 4;
+  REPORT_TYPE_MOVIMENTADO = 5;
+  REPORT_TYPE_OUTROS = 6;
+  REPORT_TYPE_ASSALTO = 7;
+}
+
+message Report{
+  string report_date = 1;
+  repeated ReportType types = 2;
+  string description = 3;
+  bool anonymous = 4;
+  float latitude = 5;
+  float longitude = 6;
+}
+
+message CreateReportRequest {
+  string user_id = 1;
+  Report report = 2;
+}
+
+message CreateReportResponse {
+  bool created = 1;
+}
+
+service ReportService {
+  rpc CreateReport(CreateReportRequest) returns (CreateReportResponse){}
+}
