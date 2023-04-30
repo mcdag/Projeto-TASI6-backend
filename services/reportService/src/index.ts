@@ -14,6 +14,7 @@ const createReport = (
   call: ServerUnaryCall<CreateReportRequest, CreateReportResponse>,
   callback: sendUnaryData<CreateReportResponse>
 ) => {
+  console.log(`request: ${call}`);
   const response = new CreateReportResponse();
 
   if (call.request.getReport()?.getTypesList().length == 0) {
