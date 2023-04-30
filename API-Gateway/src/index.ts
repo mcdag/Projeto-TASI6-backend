@@ -1,5 +1,6 @@
 import { response } from "express";
 import { credentials } from "grpc";
+import { report } from "process";
 import { CreateReportRequestDTO } from "./dtos/createReport.dto";
 import { ReportServiceClient } from "./grpc/proto/services/report/report_service_grpc_pb";
 import {
@@ -31,13 +32,18 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 
-app.post("/report", async (req: any, res: any): Promise<void> => {
+app.post("/report", async (req, res): Promise<void> => {
   const dto = new CreateReportRequestDTO(req.body);
   const reportRequest = dto.toProto();
 
-  await reportServiceGRPC.createReport(reportRequest, (error, response) => {
+  reportServiceGRPC.createReport(reportRequest, (error, response) => {
     res.send({ created: response.getCreated() });
   });
+});
+
+app.get("/report", async (req, res): Promise<void> => {
+  const reports = [];
+  res.json(reports);
 });
 
 app.listen(PORT, () => {
