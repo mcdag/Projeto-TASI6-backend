@@ -5,11 +5,14 @@ import {
   ServerCredentials,
 } from "@grpc/grpc-js";
 import { dataSource } from "./app-data-source";
-import { Report } from "./data/entities/report.entity";
+import { Report as ReportEntity } from "./data/entities/report.entity";
 import { ReportServiceService } from "./grpc/proto/services/report/report_service_grpc_pb";
 import {
   CreateReportRequest,
   CreateReportResponse,
+  ListAllReportsRequest,
+  ListAllReportsResponse,
+  Report,
 } from "./grpc/proto/services/report/report_service_pb";
 
 import dotenv from "dotenv-safe";
@@ -20,11 +23,10 @@ dotenv.config({
 
 dataSource.initialize().then(() => console.log("Datasource initialized"));
 
-const repository = dataSource.getRepository(Report);
+const repository = dataSource.getRepository(ReportEntity);
 
-const convertToEntity = (proto: CreateReportRequest): Report => {
-
-  const report = new Report();
+const convertToEntity = (proto: CreateReportRequest): ReportEntity => {
+  const report = new ReportEntity();
   report.anonymous = proto.getReport()?.getAnonymous() ?? false;
   report.description = proto.getReport()?.getDescription() ?? "";
   report.latitude = proto.getReport()?.getLatitude() ?? 0;
@@ -87,11 +89,32 @@ amqp.connect('amqp://localhost', function(error0: any, connection: any) {
         }, {
             noAck: true
         });
+      });
     });
-});
+const listAllReports = async (
+  call: ServerUnaryCall<ListAllReportsRequest, ListAllReportsResponse>,
+  callback: sendUnaryData<ListAllReportsResponse>
+) => {
+  try {
+    const response = await repository.find().then((reports) => {
+      return reports.map((report) =>
+        new Report()
+          .setAnonymous(report.anonymous)
+          .setDescription(report.description)
+          .setLatitude(report.latitude)
+          .setLongitude(report.longitude)
+          .setReportDate(report.report_date)
+          .setType(report.type)
+      );
+    });
+    callback(null, new ListAllReportsResponse().setReportsList(response));
+  } catch (e) {}
+};
+
+
 const server = new Server();
 
-server.addService(ReportServiceService, { createReport });
+server.addService(ReportServiceService, { createReport, listAllReports });
 
 server.bindAsync("0.0.0.0:4000", ServerCredentials.createInsecure(), () => {
   server.start();
