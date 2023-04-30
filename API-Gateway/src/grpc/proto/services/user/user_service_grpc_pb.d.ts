@@ -1,4 +1,4 @@
-// package: services.report
+// package: services.user
 // file: proto/services/user/user_service.proto
 
 /* tslint:disable */
@@ -18,7 +18,7 @@ interface IUserServiceService_ISignUp
     proto_services_user_user_service_pb.SignUpRequest,
     proto_services_user_user_service_pb.SignUpResponse
   > {
-  path: "/services.report.UserService/SignUp";
+  path: "/services.user.UserService/SignUp";
   requestStream: false;
   responseStream: false;
   requestSerialize: grpc.serialize<proto_services_user_user_service_pb.SignUpRequest>;
@@ -31,7 +31,7 @@ interface IUserServiceService_ILogin
     proto_services_user_user_service_pb.LoginRequest,
     proto_services_user_user_service_pb.LoginResponse
   > {
-  path: "/services.report.UserService/Login";
+  path: "/services.user.UserService/Login";
   requestStream: false;
   responseStream: false;
   requestSerialize: grpc.serialize<proto_services_user_user_service_pb.LoginRequest>;

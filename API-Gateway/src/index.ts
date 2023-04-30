@@ -1,6 +1,10 @@
 import { credentials } from "grpc";
 import { CreateReportRequestDTO } from "./dtos/createReport.dto";
+import { SignUpRequestDTO } from "./dtos/signup.dto";
+import { UserServiceGRPC } from "./grpc/clients/userService";
 import { ReportServiceClient } from "./grpc/proto/services/report/report_service_grpc_pb";
+import { UserServiceClient } from "./grpc/proto/services/user/user_service_grpc_pb";
+import { SignUpRequest } from "./grpc/proto/services/user/user_service_pb";
 
 const dotenv = require("dotenv-safe");
 const express = require("express");
@@ -16,6 +20,11 @@ const HOSTNAME = process.env.HOSTNAME || "http://localhost";
 
 const reportServiceGRPC = new ReportServiceClient(
   `localhost:${process.env.REPORT_SERVICE_PORT}`,
+  credentials.createInsecure()
+);
+
+const userServiceGRPC = new UserServiceClient(
+  `localhost:${process.env.USER_SERVICE_PORT}`,
   credentials.createInsecure()
 );
 
@@ -73,6 +82,16 @@ app.post("/report", async (req, res): Promise<void> => {
 app.get("/report", async (req, res): Promise<void> => {
   const reports = [];
   res.json(reports);
+});
+
+app.post("/user", async (req, res): Promise<void> => {
+  const dto = new SignUpRequestDTO(req.body);
+
+  const signUpRequest = dto.toProto();
+
+  userServiceGRPC.signUp(signUpRequest, (error, response) => {
+    res.send({ created: response.getCreated() });
+  });
 });
 
 app.listen(PORT, () => {
