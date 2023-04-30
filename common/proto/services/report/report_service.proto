@@ -20,6 +20,13 @@ message CreateReportResponse {
   bool created = 1;
 }
 
+message ListAllReportsRequest{}
+
+message ListAllReportsResponse{
+  repeated Report reports = 1;
+}
+
 service ReportService {
   rpc CreateReport(CreateReportRequest) returns (CreateReportResponse){}
+  rpc ListAllReports(ListAllReportsRequest) returns (ListAllReportsResponse){}
 }
