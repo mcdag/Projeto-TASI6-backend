@@ -4,26 +4,46 @@ import {
   Server,
   ServerCredentials,
 } from "@grpc/grpc-js";
+import { dataSource } from "./app-data-source";
+import { Report } from "./data/entities/report.entity";
 import { ReportServiceService } from "./grpc/proto/services/report/report_service_grpc_pb";
 import {
   CreateReportRequest,
   CreateReportResponse,
 } from "./grpc/proto/services/report/report_service_pb";
 
+dataSource.initialize().then(() => console.log("Datasource initialized"));
+
+const repository = dataSource.getRepository(Report);
+
+const convertToEntity = (proto: CreateReportRequest): Report => {
+  const report = new Report();
+  report.anonymous = proto.getReport()?.getAnonymous() ?? false;
+  report.description = proto.getReport()?.getDescription() ?? "";
+  report.latitude = proto.getReport()?.getLatitude() ?? 0;
+  report.longitude = proto.getReport()?.getLongitude() ?? 0;
+  report.report_date = new Date().toISOString();
+  report.type = proto.getReport()?.getType() ?? "";
+  report.user_id = proto.getUserId();
+
+  return report;
+};
+
 const createReport = (
   call: ServerUnaryCall<CreateReportRequest, CreateReportResponse>,
   callback: sendUnaryData<CreateReportResponse>
 ) => {
-  console.log(`request: ${call}`);
-  const response = new CreateReportResponse();
+  try {
+    console.log(`request report: ${call.request.getReport()}`);
+    const req = call.request;
+    const report = convertToEntity(req);
 
-  if (call.request.getReport()?.getTypesList().length == 0) {
-    response.setCreated(false);
-  } else {
-    response.setCreated(true);
+    repository.save(report);
+    callback(null, new CreateReportResponse().setCreated(true));
+  } catch (e) {
+    console.log(e);
+    callback(null, new CreateReportResponse().setCreated(false));
   }
-  console.log(`${response.getCreated()}`);
-  callback(null, response);
 };
 
 const server = new Server();

@@ -9,10 +9,8 @@ import * as jspb from "google-protobuf";
 export class Report extends jspb.Message { 
     getReportDate(): string;
     setReportDate(value: string): Report;
-    clearTypesList(): void;
-    getTypesList(): Array<ReportType>;
-    setTypesList(value: Array<ReportType>): Report;
-    addTypes(value: ReportType, index?: number): ReportType;
+    getType(): string;
+    setType(value: string): Report;
     getDescription(): string;
     setDescription(value: string): Report;
     getAnonymous(): boolean;
@@ -35,7 +33,7 @@ export class Report extends jspb.Message {
 export namespace Report {
     export type AsObject = {
         reportDate: string,
-        typesList: Array<ReportType>,
+        type: string,
         description: string,
         anonymous: boolean,
         latitude: number,
@@ -87,15 +85,4 @@ export namespace CreateReportResponse {
     export type AsObject = {
         created: boolean,
     }
-}
-
-export enum ReportType {
-    REPORT_TYPE_UNSPECIFIED = 0,
-    REPORT_TYPE_POUCA_ILUMINACAO = 1,
-    REPORT_TYPE_ASSEDIO = 2,
-    REPORT_TYPE_MATAGAL = 3,
-    REPORT_TYPE_ILUMINADO = 4,
-    REPORT_TYPE_MOVIMENTADO = 5,
-    REPORT_TYPE_OUTROS = 6,
-    REPORT_TYPE_ASSALTO = 7,
 }

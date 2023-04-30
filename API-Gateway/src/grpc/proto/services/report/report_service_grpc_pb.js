@@ -2,7 +2,7 @@
 
 "use strict";
 var grpc = require("grpc");
-var proto_services_report_report_service_pb = require("./report_service_pb.js");
+var proto_services_report_report_service_pb = require("../../../proto/services/report/report_service_pb.js");
 
 function serialize_services_report_CreateReportRequest(arg) {
   if (

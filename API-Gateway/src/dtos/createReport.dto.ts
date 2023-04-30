@@ -1,13 +1,11 @@
 import {
   CreateReportRequest,
-  CreateReportResponse,
   Report,
-  ReportType,
 } from "../grpc/proto/services/report/report_service_pb";
 
 export class CreateReportRequestDTO {
   userId: string;
-  typesList: ReportType[];
+  type: string;
   reportDate: Date;
   description: string;
   anonymous: boolean;
@@ -21,23 +19,23 @@ export class CreateReportRequestDTO {
     this.anonymous = dto.anonymous || false;
     this.latitude = dto.latitude || 0;
     this.longitude = dto.longitude || 0;
-    this.typesList = dto.typesList || [];
+    this.type = dto.type || "";
   }
 
   public toProto(): CreateReportRequest {
     const proto = new CreateReportRequest();
     proto.setUserId(this.userId);
 
-    const report = new Report();
-    report.setAnonymous(this.anonymous);
-    report.setDescription(this.description);
-    report.setLatitude(this.latitude);
-    report.setLongitude(this.longitude);
-    report.setReportDate(this.reportDate.toISOString());
-    report.setTypesList(this.typesList);
+    const report = new Report()
+      .setAnonymous(this.anonymous)
+      .setDescription(this.description)
+      .setLatitude(this.latitude)
+      .setLongitude(this.longitude)
+      .setReportDate(this.reportDate.toISOString())
+      .setType(this.type);
 
     proto.setReport(report);
-    console.log(`Generated proto: ${proto}`);
+    console.log(`Generated proto: ${proto.getReport()?.getLongitude()}`);
     return proto;
   }
 }

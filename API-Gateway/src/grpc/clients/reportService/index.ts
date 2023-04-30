@@ -1,11 +1,6 @@
 import { credentials } from "grpc";
 import { CreateReportRequestDTO } from "../../../dtos/createReport.dto";
 import { ReportServiceClient } from "../../proto/services/report/report_service_grpc_pb";
-import {
-  CreateReportRequest,
-  Report,
-  ReportType,
-} from "../../proto/services/report/report_service_pb";
 
 const client = new ReportServiceClient(
   `localhost:${process.env.REPORT_SERVICE_PORT}`,

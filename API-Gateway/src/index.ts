@@ -1,13 +1,6 @@
-import { response } from "express";
 import { credentials } from "grpc";
-import { report } from "process";
 import { CreateReportRequestDTO } from "./dtos/createReport.dto";
 import { ReportServiceClient } from "./grpc/proto/services/report/report_service_grpc_pb";
-import {
-  CreateReportRequest,
-  Report,
-  ReportType,
-} from "./grpc/proto/services/report/report_service_pb";
 
 const dotenv = require("dotenv-safe");
 const express = require("express");
@@ -33,8 +26,15 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 
 app.post("/report", async (req, res): Promise<void> => {
+  console.log(`body: ${req.body}`);
   const dto = new CreateReportRequestDTO(req.body);
   const reportRequest = dto.toProto();
+
+  console.log(`dto_userId: ${dto.userId}`);
+  console.log(`dto_anonymous: ${dto.anonymous}`);
+  console.log(`dto_description: ${dto.description}`);
+  console.log(`dto_latitude: ${dto.latitude}`);
+  console.log(`dto_longitude: ${dto.longitude}`);
 
   reportServiceGRPC.createReport(reportRequest, (error, response) => {
     res.send({ created: response.getCreated() });

@@ -5,7 +5,7 @@
 /* eslint-disable */
 
 import * as grpc from "grpc";
-import * as proto_services_report_report_service_pb from "./report_service_pb";
+import * as proto_services_report_report_service_pb from "../../../proto/services/report/report_service_pb";
 
 interface IReportServiceService
   extends grpc.ServiceDefinition<grpc.UntypedServiceImplementation> {
