@@ -104,7 +104,7 @@ app.post("/user", async (req, res): Promise<void> => {
   console.log(`Sign-up request: ${signUpRequest}`);
 
   userServiceGRPC.signUp(signUpRequest, (error, response) => {
-    res.send({ created: response.getCreated() });
+    res.status(201).send({ created: response.getCreated() });
   });
 });
 
