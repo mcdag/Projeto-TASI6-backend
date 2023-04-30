@@ -4,12 +4,11 @@ import {
   Server,
   ServerCredentials,
 } from "@grpc/grpc-js";
-import { ReportServiceService } from "../proto/services/report/report_service_grpc_pb";
+import { ReportServiceService } from "./grpc/proto/services/report/report_service_grpc_pb";
 import {
   CreateReportRequest,
   CreateReportResponse,
-  ReportType,
-} from "../proto/services/report/report_service_pb";
+} from "./grpc/proto/services/report/report_service_pb";
 
 const createReport = (
   call: ServerUnaryCall<CreateReportRequest, CreateReportResponse>,

@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon src/server/index.ts --watch src/server",
-    "start:client": "nodemon src/client/index.ts --watch src/client",
+    "start": "nodemon src/index.ts --watch src/",
+    "start:client": "nodemon src/grpc/client/index.ts --watch src/client",
     "proto:build": "cd proto; buf build; cd ..",
     "codegen:buf": "cd proto; buf generate; cd .."
   },
