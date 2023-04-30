@@ -98,7 +98,10 @@ app.get("/report", async (req, res): Promise<void> => {
 app.post("/user", async (req, res): Promise<void> => {
   const dto = new SignUpRequestDTO(req.body);
 
+  console.log(`req: ${dto.name}`);
+
   const signUpRequest = dto.toProto();
+  console.log(`Sign-up request: ${signUpRequest}`);
 
   userServiceGRPC.signUp(signUpRequest, (error, response) => {
     res.send({ created: response.getCreated() });
