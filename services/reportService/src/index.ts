@@ -12,6 +12,12 @@ import {
   CreateReportResponse,
 } from "./grpc/proto/services/report/report_service_pb";
 
+import dotenv from "dotenv-safe";
+
+dotenv.config({
+  path: ".env",
+});
+
 dataSource.initialize().then(() => console.log("Datasource initialized"));
 
 const repository = dataSource.getRepository(Report);

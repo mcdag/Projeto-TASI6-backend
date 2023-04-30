@@ -1,4 +1,4 @@
-// package: services.report
+// package: services.user
 // file: proto/services/user/user_service.proto
 
 /* tslint:disable */
@@ -13,7 +13,7 @@ interface IUserServiceService extends grpc.ServiceDefinition<grpc.UntypedService
 }
 
 interface IUserServiceService_ISignUp extends grpc.MethodDefinition<proto_services_user_user_service_pb.SignUpRequest, proto_services_user_user_service_pb.SignUpResponse> {
-    path: "/services.report.UserService/SignUp";
+    path: "/services.user.UserService/SignUp";
     requestStream: false;
     responseStream: false;
     requestSerialize: grpc.serialize<proto_services_user_user_service_pb.SignUpRequest>;
@@ -22,7 +22,7 @@ interface IUserServiceService_ISignUp extends grpc.MethodDefinition<proto_servic
     responseDeserialize: grpc.deserialize<proto_services_user_user_service_pb.SignUpResponse>;
 }
 interface IUserServiceService_ILogin extends grpc.MethodDefinition<proto_services_user_user_service_pb.LoginRequest, proto_services_user_user_service_pb.LoginResponse> {
-    path: "/services.report.UserService/Login";
+    path: "/services.user.UserService/Login";
     requestStream: false;
     responseStream: false;
     requestSerialize: grpc.serialize<proto_services_user_user_service_pb.LoginRequest>;

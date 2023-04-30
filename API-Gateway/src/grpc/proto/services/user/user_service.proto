@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-package services.user;
+package services.report;
 
 message User{
   optional string id = 1; 
@@ -14,7 +14,7 @@ message SignUpRequest {
 }
 
 message SignUpResponse {
-  bool created = 1;
+  User created_user = 1;
 }
 
 message LoginRequest {
