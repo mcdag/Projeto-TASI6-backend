@@ -3,11 +3,12 @@ import { Report } from "./data/entities/report.entity";
 
 export const dataSource = new DataSource({
   type: "postgres",
-  host: process.env.DB_HOST ?? "localhost",
-  port: parseInt(process.env.DB_PORT ?? "5432"),
+  host: "localhost",
+  port: 15432,
   username: "postgres",
-  password: process.env.DB_PASSWORD,
-  database: "security_mobi",
+//password: process.env.DB_PASSWORD,
+  database: "security-mob",
+  password: "postgres",
   entities: [Report],
   logging: true,
   synchronize: true,

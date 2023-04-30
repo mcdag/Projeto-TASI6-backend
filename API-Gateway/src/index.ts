@@ -63,7 +63,7 @@ app.post("/report", async (req, res): Promise<void> => {
       channel.assertQueue(queue, {
         durable: false,
       });
-      channel.sendToQueue(queue, Buffer.from(msg.toString()));
+      channel.sendToQueue(queue, Buffer.from(JSON.stringify(msg)));
 
       console.log(" [x] Sent %s", msg);
     });

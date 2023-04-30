@@ -69,19 +69,26 @@ amqp.connect('amqp://localhost', function(error0: any, connection: any) {
         channel.assertQueue(queue, {
             durable: false
         });
-
         console.log(" [*] Waiting for messages in %s. To exit press CTRL+C", queue);
 
         channel.consume(queue, function(msg: any) {
-            const newReport = msg.content;
-            console.log(`${newReport}`);
-            repository.save(newReport);
+            const newReport = JSON.parse(msg.content);
+            const report= {
+              user_id: newReport.userId,
+              anonymous: newReport.anonymous,
+              description: newReport.description,
+              latitude: newReport.latitude,
+              longitude: newReport.longitude,
+              report_date: (new Date()).toString(),
+              type: newReport.type,
+            }
+            console.log(" [x] Received %s", report);
+            repository.save(report);
         }, {
             noAck: true
         });
     });
 });
-
 const server = new Server();
 
 server.addService(ReportServiceService, { createReport });
