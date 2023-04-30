@@ -97,6 +97,7 @@ const listAllReports = async (
 ) => {
   try {
     const response = await repository.find().then((reports) => {
+      console.log(reports);
       return reports.map((report) =>
         new Report()
           .setAnonymous(report.anonymous)
@@ -107,6 +108,7 @@ const listAllReports = async (
           .setType(report.type)
       );
     });
+    console.log(`response: ${response}`);
     callback(null, new ListAllReportsResponse().setReportsList(response));
   } catch (e) {}
 };
