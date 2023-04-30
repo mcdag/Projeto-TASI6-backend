@@ -1,6 +1,8 @@
 {
   "scripts": {
-    "proto_gen": "sh proto_gen_report_service.sh"
+    "proto_gen": "npm run proto_gen_report_service && npm run proto_gen_user_service",
+    "proto_gen_report_service": "sh proto_gen_report_service.sh",
+    "proto_gen_user_service": "sh proto_gen_user_service.sh"
   },
   "dependencies": {
     "@types/dotenv-safe": "^8.1.2",
