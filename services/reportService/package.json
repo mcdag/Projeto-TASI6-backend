@@ -21,6 +21,7 @@
   "dependencies": {
     "@grpc/grpc-js": "^1.8.14",
     "@types/dotenv-safe": "^8.1.2",
+    "amqplib": "^0.10.3",
     "dotenv-safe": "^8.2.0",
     "google-protobuf": "^3.21.2",
     "grpc": "^1.24.11",

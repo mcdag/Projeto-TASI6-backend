@@ -20,12 +20,14 @@ const reportServiceGRPC = new ReportServiceClient(
 );
 
 const app = express();
+var amqp = require("amqplib/callback_api");
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 
 app.post("/report", async (req, res): Promise<void> => {
+
   console.log(`body: ${req.body}`);
   const dto = new CreateReportRequestDTO(req.body);
   const reportRequest = dto.toProto();
@@ -36,9 +38,36 @@ app.post("/report", async (req, res): Promise<void> => {
   console.log(`dto_latitude: ${dto.latitude}`);
   console.log(`dto_longitude: ${dto.longitude}`);
 
-  reportServiceGRPC.createReport(reportRequest, (error, response) => {
-    res.send({ created: response.getCreated() });
+
+  amqp.connect("amqp://localhost", function (error0, connection) {
+    if (error0) {
+      throw error0;
+    }
+    connection.createChannel(function (error1, channel) {
+      if (error1) {
+        throw error1;
+      }
+
+      var queue = "report";
+      var msg = dto;
+
+      channel.assertQueue(queue, {
+        durable: false,
+      });
+      channel.sendToQueue(queue, Buffer.from(msg.toString()));
+
+      console.log(" [x] Sent %s", msg);
+    });
+    setTimeout(function () {
+      connection.close();
+    }, 500);
   });
+
+  // reportServiceGRPC.createReport(reportRequest, (error, response) => {
+  //   res.send({ created: response.getCreated() });
+  // });
+
+  res.status(200).send({ created: true });
 });
 
 app.get("/report", async (req, res): Promise<void> => {
