@@ -1,8 +1,12 @@
 import { credentials } from "grpc";
-import { CreateReportRequestDTO } from "./dtos/createReport.dto";
+import {
+  CreateReportRequestDTO,
+  CreateReportResponseDTO,
+} from "./dtos/createReport.dto";
 import { SignUpRequestDTO } from "./dtos/signup.dto";
 import { UserServiceGRPC } from "./grpc/clients/userService";
 import { ReportServiceClient } from "./grpc/proto/services/report/report_service_grpc_pb";
+import { ListAllReportsRequest } from "./grpc/proto/services/report/report_service_pb";
 import { UserServiceClient } from "./grpc/proto/services/user/user_service_grpc_pb";
 import { SignUpRequest } from "./grpc/proto/services/user/user_service_pb";
 
@@ -36,7 +40,6 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 
 app.post("/report", async (req, res): Promise<void> => {
-
   console.log(`body: ${req.body}`);
   const dto = new CreateReportRequestDTO(req.body);
   const reportRequest = dto.toProto();
@@ -46,7 +49,6 @@ app.post("/report", async (req, res): Promise<void> => {
   console.log(`dto_description: ${dto.description}`);
   console.log(`dto_latitude: ${dto.latitude}`);
   console.log(`dto_longitude: ${dto.longitude}`);
-
 
   amqp.connect("amqp://localhost", function (error0, connection) {
     if (error0) {
@@ -80,8 +82,17 @@ app.post("/report", async (req, res): Promise<void> => {
 });
 
 app.get("/report", async (req, res): Promise<void> => {
-  const reports = [];
-  res.json(reports);
+  reportServiceGRPC.listAllReports(
+    new ListAllReportsRequest(),
+    (error, response) => {
+      console.log(response);
+      res.json({
+        reports: response
+          .getReportsList()
+          .map((report) => CreateReportResponseDTO.fromProto(report)),
+      });
+    }
+  );
 });
 
 app.post("/user", async (req, res): Promise<void> => {

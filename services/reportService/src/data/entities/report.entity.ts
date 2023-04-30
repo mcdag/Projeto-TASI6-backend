@@ -1,5 +1,4 @@
 import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
-import { CreateReportRequest } from "../../grpc/proto/services/report/report_service_pb";
 
 @Entity()
 export class Report {
