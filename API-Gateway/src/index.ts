@@ -5,11 +5,9 @@ import {
 } from "./dtos/createReport.dto";
 import { LoginRequestDTO } from "./dtos/login.dto";
 import { SignUpRequestDTO } from "./dtos/signup.dto";
-import { UserServiceGRPC } from "./grpc/clients/userService";
 import { ReportServiceClient } from "./grpc/proto/services/report/report_service_grpc_pb";
 import { ListAllReportsRequest } from "./grpc/proto/services/report/report_service_pb";
 import { UserServiceClient } from "./grpc/proto/services/user/user_service_grpc_pb";
-import { SignUpRequest } from "./grpc/proto/services/user/user_service_pb";
 
 const dotenv = require("dotenv-safe");
 const express = require("express");

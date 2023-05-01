@@ -8,7 +8,6 @@ import { dataSource } from "./app-data-source";
 import { User as UserEntity } from "./data/entities/user.entity";
 
 import dotenv from "dotenv-safe";
-import { UserServiceService } from "./grpc/proto/services/user/user_service_grpc_pb";
 import {
   LoginRequest,
   LoginResponse,
@@ -16,6 +15,7 @@ import {
   SignUpResponse,
   User,
 } from "./grpc/proto/services/user/user_service_pb";
+import { UserServiceService } from "./grpc/proto/services/user/user_service_grpc_pb";
 
 dotenv.config({
   path: ".env",

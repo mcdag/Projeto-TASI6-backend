@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/mcdag/Projeto-TASI6-backend#readme",
   "dependencies": {
-    "amqplib": "^0.10.3"
+    "amqplib": "^0.10.3",
+    "copyfiles": "^2.4.1"
   }
 }

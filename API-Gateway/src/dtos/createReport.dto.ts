@@ -1,4 +1,3 @@
-import { CreateReportResponse } from "../grpc/proto/services/report/report_service_pb";
 import {
   CreateReportRequest,
   Report,

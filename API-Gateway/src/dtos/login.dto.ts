@@ -1,7 +1,6 @@
 import {
   LoginRequest,
   LoginResponse,
-  User,
 } from "../grpc/proto/services/user/user_service_pb";
 
 export class LoginRequestDTO {

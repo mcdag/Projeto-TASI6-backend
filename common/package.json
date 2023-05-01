@@ -1,8 +1,14 @@
 {
   "scripts": {
+    "sync_protos": "npm run proto_gen && copy_protos",
+    "copy_protos": "npm run sync_user_service && npm run sync_report_service && npm run sync_api_gateway",
     "proto_gen": "npm run proto_gen_report_service && npm run proto_gen_user_service",
     "proto_gen_report_service": "sh proto_gen_report_service.sh",
-    "proto_gen_user_service": "sh proto_gen_user_service.sh"
+    "proto_gen_user_service": "sh proto_gen_user_service.sh",
+    "sync_user_service": "rimraf ../services/userService/src/grpc/proto && copyfiles --flat ./proto/services/user/*.* ../services/userService/src/grpc/proto/services/user",
+    "sync_report_service": "rimraf ../services/reportService/src/grpc/proto && copyfiles --flat ./proto/services/report/*.* ../services/reportService/src/grpc/proto/services/report",
+    "sync_api_gateway": "rimraf ../API-Gateway/src/grpc/proto && copyfiles ./proto/services/**/*.* ../API-Gateway/src/grpc",
+    "format-proto": "prettier --write \"src/grpc/**/*.ts\""
   },
   "dependencies": {
     "@types/dotenv-safe": "^8.1.2",
