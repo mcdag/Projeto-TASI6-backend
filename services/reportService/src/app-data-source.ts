@@ -9,6 +9,6 @@ export const dataSource = new DataSource({
   password: process.env.DB_PASSWORD,
   database: "security_mobi",
   entities: [Report],
-  logging: true,
+  logging: false,
   synchronize: true,
 });
