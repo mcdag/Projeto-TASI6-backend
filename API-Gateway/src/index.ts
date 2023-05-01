@@ -3,6 +3,7 @@ import {
   CreateReportRequestDTO,
   CreateReportResponseDTO,
 } from "./dtos/createReport.dto";
+import { LoginRequestDTO } from "./dtos/login.dto";
 import { SignUpRequestDTO } from "./dtos/signup.dto";
 import { UserServiceGRPC } from "./grpc/clients/userService";
 import { ReportServiceClient } from "./grpc/proto/services/report/report_service_grpc_pb";
@@ -105,6 +106,30 @@ app.post("/user", async (req, res): Promise<void> => {
 
   userServiceGRPC.signUp(signUpRequest, (error, response) => {
     res.status(201).send({ created: response.getCreated() });
+  });
+});
+
+app.post("/login", async (req, res): Promise<void> => {
+  const dto = new LoginRequestDTO(req.body);
+
+  console.log(`req: ${dto.email}`);
+
+  console.log(`Login request: ${Object.keys(dto)}`);
+  const loginRequest = dto.toProto();
+  console.log(`Login request: ${loginRequest}`);
+
+  userServiceGRPC.login(loginRequest, (error, response) => {
+    if (error) {
+      switch (error.code) {
+        case 3:
+          res.status(401).send(error.message);
+          return;
+        case 13:
+          res.status(500).send(error.message);
+          return;
+      }
+    }
+    res.status(201).json();
   });
 });
 
