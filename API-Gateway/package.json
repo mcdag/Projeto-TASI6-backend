@@ -29,6 +29,7 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@types/amqplib": "^0.10.1",
     "@types/dotenv-safe": "^8.1.2",
     "ts-node": "^10.9.1"
   }

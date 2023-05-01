@@ -19,7 +19,7 @@ export class SignUpRequestDTO {
       .setName(this.name)
       .setPassword(this.password);
     proto.setUser(user);
-    console.log(`Generated proto: ${proto.getUser()?.getName}`);
+    console.log(`Generated proto: ${proto.getUser()?.getName()}`);
     return proto;
   }
 }
