@@ -28,4 +28,5 @@ message LoginResponse {
 
 service UserService {
   rpc SignUp(SignUpRequest) returns (SignUpResponse);
+  rpc Login(LoginRequest) returns (LoginResponse);
 }
