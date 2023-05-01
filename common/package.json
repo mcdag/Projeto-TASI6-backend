@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "sync_protos": "npm run proto_gen && copy_protos",
+    "sync_protos": "npm run proto_gen && npm run copy_protos",
     "copy_protos": "npm run sync_user_service && npm run sync_report_service && npm run sync_api_gateway",
     "proto_gen": "npm run proto_gen_report_service && npm run proto_gen_user_service",
     "proto_gen_report_service": "sh proto_gen_report_service.sh",
