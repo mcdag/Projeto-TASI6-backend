@@ -1,0 +1,28 @@
+syntax = "proto3";
+
+package services.user;
+
+message SignUpRequest {
+  string user_id = 1; 
+  string username = 2;
+  string password = 3;
+}
+
+message SignUpResponse {
+  bool created = 1;
+}
+
+message LoginRequest {
+  string username = 1;
+  string password = 2;
+}
+
+message LoginResponse {
+  string user_id = 1;
+  string auth_token = 2;
+}
+
+service UserService {
+  rpc SignUp(SignUpRequest) returns (SignUpResponse);
+  rpc Login(LoginRequest) returns (LoginResponse);
+}

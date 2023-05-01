@@ -24,9 +24,11 @@ dotenv.config({
 dataSource.initialize().then(() => console.log("Datasource initialized"));
 
 const repository = dataSource.getRepository(UserEntity);
+const uuid = require("uuid");
 
 const convertToEntity = (proto: SignUpRequest): UserEntity => {
   const user = new UserEntity();
+  user.id = uuid.v4();
   user.email = proto.getUser()?.getEmail() ?? "";
   user.name = proto.getUser()?.getName() ?? "";
   user.password = proto.getUser()?.getPassword() ?? "";
