@@ -1,4 +1,4 @@
-// package: services.user
+// package: services.auth
 // file: proto/services/auth/auth_service.proto
 
 /* tslint:disable */
@@ -33,8 +33,8 @@ export namespace SignUpRequest {
 }
 
 export class SignUpResponse extends jspb.Message { 
-    getCreated(): boolean;
-    setCreated(value: boolean): SignUpResponse;
+    getUserid(): string;
+    setUserid(value: string): SignUpResponse;
 
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): SignUpResponse.AsObject;
@@ -48,7 +48,7 @@ export class SignUpResponse extends jspb.Message {
 
 export namespace SignUpResponse {
     export type AsObject = {
-        created: boolean,
+        userid: string,
     }
 }
 

@@ -4,74 +4,74 @@
 var grpc = require('grpc');
 var proto_services_auth_auth_service_pb = require('../../../proto/services/auth/auth_service_pb.js');
 
-function serialize_services_user_LoginRequest(arg) {
+function serialize_services_auth_LoginRequest(arg) {
   if (!(arg instanceof proto_services_auth_auth_service_pb.LoginRequest)) {
-    throw new Error('Expected argument of type services.user.LoginRequest');
+    throw new Error('Expected argument of type services.auth.LoginRequest');
   }
   return Buffer.from(arg.serializeBinary());
 }
 
-function deserialize_services_user_LoginRequest(buffer_arg) {
+function deserialize_services_auth_LoginRequest(buffer_arg) {
   return proto_services_auth_auth_service_pb.LoginRequest.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
-function serialize_services_user_LoginResponse(arg) {
+function serialize_services_auth_LoginResponse(arg) {
   if (!(arg instanceof proto_services_auth_auth_service_pb.LoginResponse)) {
-    throw new Error('Expected argument of type services.user.LoginResponse');
+    throw new Error('Expected argument of type services.auth.LoginResponse');
   }
   return Buffer.from(arg.serializeBinary());
 }
 
-function deserialize_services_user_LoginResponse(buffer_arg) {
+function deserialize_services_auth_LoginResponse(buffer_arg) {
   return proto_services_auth_auth_service_pb.LoginResponse.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
-function serialize_services_user_SignUpRequest(arg) {
+function serialize_services_auth_SignUpRequest(arg) {
   if (!(arg instanceof proto_services_auth_auth_service_pb.SignUpRequest)) {
-    throw new Error('Expected argument of type services.user.SignUpRequest');
+    throw new Error('Expected argument of type services.auth.SignUpRequest');
   }
   return Buffer.from(arg.serializeBinary());
 }
 
-function deserialize_services_user_SignUpRequest(buffer_arg) {
+function deserialize_services_auth_SignUpRequest(buffer_arg) {
   return proto_services_auth_auth_service_pb.SignUpRequest.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
-function serialize_services_user_SignUpResponse(arg) {
+function serialize_services_auth_SignUpResponse(arg) {
   if (!(arg instanceof proto_services_auth_auth_service_pb.SignUpResponse)) {
-    throw new Error('Expected argument of type services.user.SignUpResponse');
+    throw new Error('Expected argument of type services.auth.SignUpResponse');
   }
   return Buffer.from(arg.serializeBinary());
 }
 
-function deserialize_services_user_SignUpResponse(buffer_arg) {
+function deserialize_services_auth_SignUpResponse(buffer_arg) {
   return proto_services_auth_auth_service_pb.SignUpResponse.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
 
-var UserServiceService = exports.UserServiceService = {
+var AuthServiceService = exports.AuthServiceService = {
   signUp: {
-    path: '/services.user.UserService/SignUp',
+    path: '/services.auth.AuthService/SignUp',
     requestStream: false,
     responseStream: false,
     requestType: proto_services_auth_auth_service_pb.SignUpRequest,
     responseType: proto_services_auth_auth_service_pb.SignUpResponse,
-    requestSerialize: serialize_services_user_SignUpRequest,
-    requestDeserialize: deserialize_services_user_SignUpRequest,
-    responseSerialize: serialize_services_user_SignUpResponse,
-    responseDeserialize: deserialize_services_user_SignUpResponse,
+    requestSerialize: serialize_services_auth_SignUpRequest,
+    requestDeserialize: deserialize_services_auth_SignUpRequest,
+    responseSerialize: serialize_services_auth_SignUpResponse,
+    responseDeserialize: deserialize_services_auth_SignUpResponse,
   },
   login: {
-    path: '/services.user.UserService/Login',
+    path: '/services.auth.AuthService/Login',
     requestStream: false,
     responseStream: false,
     requestType: proto_services_auth_auth_service_pb.LoginRequest,
     responseType: proto_services_auth_auth_service_pb.LoginResponse,
-    requestSerialize: serialize_services_user_LoginRequest,
-    requestDeserialize: deserialize_services_user_LoginRequest,
-    responseSerialize: serialize_services_user_LoginResponse,
-    responseDeserialize: deserialize_services_user_LoginResponse,
+    requestSerialize: serialize_services_auth_LoginRequest,
+    requestDeserialize: deserialize_services_auth_LoginRequest,
+    responseSerialize: serialize_services_auth_LoginResponse,
+    responseDeserialize: deserialize_services_auth_LoginResponse,
   },
 };
 
-exports.UserServiceClient = grpc.makeGenericClientConstructor(UserServiceService);
+exports.AuthServiceClient = grpc.makeGenericClientConstructor(AuthServiceService);

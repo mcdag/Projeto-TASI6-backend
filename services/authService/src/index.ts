@@ -14,29 +14,50 @@ import {
   SignUpRequest,
   SignUpResponse,
 } from "./grpc/proto/services/auth/auth_service_pb";
+import { AuthServiceService } from "./grpc/proto/services/auth/auth_service_grpc_pb";
 
 dotenv.config({
   path: ".env",
 });
 
+const uuid = require("uuid");
+
 dataSource.initialize().then(() => console.log("Datasource initialized"));
 
 const repository = dataSource.getRepository(UserAuth);
 
+const convertToEntity = (proto: SignUpRequest): UserAuth => {
+  const user = new UserAuth({
+    user_id: proto.getUserId(),
+    username: proto.getUsername(),
+    password: proto.getPassword(),
+    authToken: uuid.v4(),
+    authTokenCreatedAt: new Date(),
+    authTokenExpirationDate: new Date(),
+  });
+
+  return user;
+};
 const signUp = async (
   call: ServerUnaryCall<SignUpRequest, SignUpResponse>,
   callback: sendUnaryData<SignUpResponse>
 ) => {
-  // try {
-  //   console.log(`request create user: ${call.request.getUser()}`);
-  //   const user = await repository.save(convertToEntity(call.request));
-  //   const response = new SignUpResponse().setCreated(true);
-  //   console.log(`response: ${response}`);
-  //   callback(null, response);
-  // } catch (e) {
-  //   console.log(e);
-  //   callback(null, new SignUpResponse().setCreated(false));
-  // }
+  try {
+    console.log(`request create user: ${call.request.getUserId()}`);
+    const user = await repository.save(convertToEntity(call.request));
+    const response = new SignUpResponse().setUserid(user.user_id);
+    console.log(`response: ${response}`);
+    callback(null, response);
+  } catch (e) {
+    console.log(e);
+    callback(
+      {
+        code: 13,
+        message: "internal server error",
+      },
+      null
+    );
+  }
 };
 
 const login = async (
@@ -86,10 +107,10 @@ const login = async (
 
 const server = new Server();
 
-// server.addService(UserServiceService, { signUp, login });
+server.addService(AuthServiceService, { signUp });
 
-server.bindAsync("0.0.0.0:5002", ServerCredentials.createInsecure(), () => {
+server.bindAsync("localhost:5002", ServerCredentials.createInsecure(), () => {
   server.start();
 
-  console.log("server is running on 0.0.0.0:5001");
+  console.log("server is running on 0.0.0.0:5002");
 });

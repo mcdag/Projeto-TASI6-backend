@@ -1,12 +1,11 @@
 import {
   LoginRequest,
   LoginResponse,
-} from "../grpc/proto/services/user/user_service_pb";
+} from "../grpc/proto/services/auth/auth_service_pb";
 
 export class LoginRequestDTO {
-  name!: string;
+  username!: string;
   password!: string;
-  email!: string;
 
   constructor(dto: Partial<LoginRequestDTO>) {
     Object.assign(this, dto);
@@ -14,17 +13,16 @@ export class LoginRequestDTO {
 
   public toProto(): LoginRequest {
     const proto = new LoginRequest()
-      .setEmail(this.email)
+      .setUsername(this.username)
       .setPassword(this.password);
-    console.log(`Generated proto: ${proto.getEmail}`);
+    console.log(`Generated proto: ${proto.getUsername}`);
     return proto;
   }
 }
 
 export class LoginResponseDTO {
-  name!: string;
-  password!: string;
-  email!: string;
+  userId!: string;
+  authToken!: string;
 
   constructor(dto: Partial<LoginResponseDTO>) {
     Object.assign(this, dto);
@@ -32,9 +30,8 @@ export class LoginResponseDTO {
 
   public static fromProto(proto: LoginResponse): LoginResponseDTO {
     return new LoginResponseDTO({
-      name: proto.getUserInfo()?.getName(),
-      password: proto.getUserInfo()?.getPassword(),
-      email: proto.getUserInfo()?.getEmail(),
+      userId: proto.getUserId(),
+      authToken: proto.getAuthToken(),
     });
   }
 }

@@ -1,6 +1,10 @@
 import { credentials } from "grpc";
 import { SignUpRequestDTO } from "../../../dtos/signup.dto";
 import { UserServiceClient } from "../../proto/services/user/user_service_grpc_pb";
+import {
+  CreateUserRequest,
+  CreateUserResponse,
+} from "../../proto/services/user/user_service_pb";
 
 const client = new UserServiceClient(
   `localhost:${process.env.REPORT_SERVICE_PORT}`,
@@ -8,17 +12,18 @@ const client = new UserServiceClient(
 );
 
 export class UserServiceGRPC {
-  public signUp(dto: SignUpRequestDTO): boolean {
+  public async signUp(
+    createUserRequest: CreateUserRequest
+  ): Promise<CreateUserResponse | undefined> {
     console.log("Creating report");
-    client.signUp(dto.toProto(), (error, response) => {
+    client.createUser(createUserRequest, (error, response) => {
       if (error) {
         console.error(error);
-
         process.exit(1);
       }
-      console.info(response.getCreated());
-      return response.getCreated();
+      console.info(response.getUserId());
+      return response;
     });
-    return false;
+    process.exit(1);
   }
 }

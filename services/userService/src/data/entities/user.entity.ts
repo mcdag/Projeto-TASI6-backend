@@ -12,7 +12,7 @@ export class User {
   email!: string;
 
   @Column()
-  password!: string;
+  username!: string;
 
   public constructor(init?: Partial<User>) {
     Object.assign(this, init);

@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-package services.user;
+package services.auth;
 
 message SignUpRequest {
   string user_id = 1; 
@@ -9,7 +9,7 @@ message SignUpRequest {
 }
 
 message SignUpResponse {
-  bool created = 1;
+  string userId = 1;
 }
 
 message LoginRequest {
@@ -22,7 +22,7 @@ message LoginResponse {
   string auth_token = 2;
 }
 
-service UserService {
+service AuthService {
   rpc SignUp(SignUpRequest) returns (SignUpResponse);
   rpc Login(LoginRequest) returns (LoginResponse);
 }
