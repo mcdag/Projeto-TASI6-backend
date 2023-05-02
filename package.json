@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "sync_protos": "cd common && npm run sync_protos"
+    "sync_protos": "cd common && npm run sync_protos",
+    "start": "(cd API-Gateway && npm start) & (cd services/authService && npm start) & (cd services/userService && npm start) & (cd services/reportService && npm start)"
   },
   "repository": {
     "type": "git",
