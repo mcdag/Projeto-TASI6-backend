@@ -1,5 +1,6 @@
 import ReportController from "./controllers/reportController";
 import UserController from "./controllers/userController";
+import EventController from "./controllers/eventController";
 
 const dotenv = require("dotenv-safe");
 const express = require("express");
@@ -21,10 +22,12 @@ app.use(cors());
 
 const reportController = new ReportController();
 const userController = new UserController();
+const eventControler = new EventController();
 
 app
   .route("/report")
   .post(async (req, res): Promise<void> => {
+    eventControler.sendEventToAllClients(req);
     reportController.createReport(req, res);
   })
   .get(async (req, res) => reportController.listAllReports(req, res));
@@ -35,6 +38,10 @@ app.route("/user").post(async (req, res): Promise<void> => {
 
 app.route("/login").post(async (req, res): Promise<void> => {
   userController.login(req, res);
+});
+
+app.route("/subscribe").get(async (req, res): Promise<void> => {
+  eventControler.subscribeHandler(req, res);
 });
 
 app.listen(PORT, () => {
