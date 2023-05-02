@@ -26,6 +26,28 @@ function deserialize_services_user_CreateUserResponse(buffer_arg) {
   return proto_services_user_user_service_pb.CreateUserResponse.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
+function serialize_services_user_GetUserInfoRequest(arg) {
+  if (!(arg instanceof proto_services_user_user_service_pb.GetUserInfoRequest)) {
+    throw new Error('Expected argument of type services.user.GetUserInfoRequest');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_services_user_GetUserInfoRequest(buffer_arg) {
+  return proto_services_user_user_service_pb.GetUserInfoRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_services_user_GetUserInfoResponse(arg) {
+  if (!(arg instanceof proto_services_user_user_service_pb.GetUserInfoResponse)) {
+    throw new Error('Expected argument of type services.user.GetUserInfoResponse');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_services_user_GetUserInfoResponse(buffer_arg) {
+  return proto_services_user_user_service_pb.GetUserInfoResponse.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
 
 var UserServiceService = exports.UserServiceService = {
   createUser: {
@@ -38,6 +60,17 @@ var UserServiceService = exports.UserServiceService = {
     requestDeserialize: deserialize_services_user_CreateUserRequest,
     responseSerialize: serialize_services_user_CreateUserResponse,
     responseDeserialize: deserialize_services_user_CreateUserResponse,
+  },
+  getUserInfo: {
+    path: '/services.user.UserService/GetUserInfo',
+    requestStream: false,
+    responseStream: false,
+    requestType: proto_services_user_user_service_pb.GetUserInfoRequest,
+    responseType: proto_services_user_user_service_pb.GetUserInfoResponse,
+    requestSerialize: serialize_services_user_GetUserInfoRequest,
+    requestDeserialize: deserialize_services_user_GetUserInfoRequest,
+    responseSerialize: serialize_services_user_GetUserInfoResponse,
+    responseDeserialize: deserialize_services_user_GetUserInfoResponse,
   },
 };
 

@@ -37,7 +37,7 @@ export default class UserController {
       this.authServiceGRPC.signUp(signUpRequest, (error, response) => {
         console.log(`created auth: ${error?.message}`);
         console.log(`created auth: ${response}`);
-        res.status(201).send({ userId: response.getUserid() });
+        res.status(201).send({ userId: response.getUserId() });
       });
     });
   }

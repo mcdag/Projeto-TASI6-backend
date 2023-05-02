@@ -28,4 +28,5 @@ message GetUserInfoResponse {
 
 service UserService {
   rpc CreateUser(CreateUserRequest) returns (CreateUserResponse);
+  rpc GetUserInfo(GetUserInfoRequest) returns (GetUserInfoResponse);
 }

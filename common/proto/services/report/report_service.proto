@@ -9,15 +9,7 @@ message Report{
   bool anonymous = 4;
   float latitude = 5;
   float longitude = 6;
-}
-
-message CreateReportRequest {
-  string user_id = 1;
-  Report report = 2;
-}
-
-message CreateReportResponse {
-  bool created = 1;
+  string user_id = 7;
 }
 
 message ListAllReportsRequest{}
@@ -27,6 +19,5 @@ message ListAllReportsResponse{
 }
 
 service ReportService {
-  rpc CreateReport(CreateReportRequest) returns (CreateReportResponse){}
   rpc ListAllReports(ListAllReportsRequest) returns (ListAllReportsResponse){}
 }

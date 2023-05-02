@@ -12,6 +12,8 @@ import { UserServiceService } from "./grpc/proto/services/user/user_service_grpc
 import {
   CreateUserRequest,
   CreateUserResponse,
+  GetUserInfoRequest,
+  GetUserInfoResponse,
 } from "./grpc/proto/services/user/user_service_pb";
 
 dotenv.config({
@@ -56,9 +58,38 @@ const createUser = async (
   }
 };
 
+const getUserInfo = async (
+  call: ServerUnaryCall<GetUserInfoRequest, GetUserInfoResponse>,
+  callback: sendUnaryData<GetUserInfoResponse>
+) => {
+  try {
+    console.log(`request create user: ${call.request.getUserId()}`);
+    const user = await repository.findOne({
+      select: { id: true, username: true, email: true, name: true },
+      where: { id: call.request.getUserId() },
+    });
+
+    const response = new GetUserInfoResponse()
+      .setEmail(user?.email!)
+      .setName(user?.name!)
+      .setUsername(user?.username!);
+    console.log(`response: ${response}`);
+    callback(null, response);
+  } catch (e) {
+    console.log(e);
+    callback(
+      {
+        code: 13,
+        message: "internal server error",
+      },
+      null
+    );
+  }
+};
+
 const server = new Server();
 
-server.addService(UserServiceService, { createUser });
+server.addService(UserServiceService, { createUser, getUserInfo });
 
 server.bindAsync("0.0.0.0:5001", ServerCredentials.createInsecure(), () => {
   server.start();

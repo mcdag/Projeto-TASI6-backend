@@ -3,18 +3,40 @@ import {
   CreateReportRequestDTO,
   CreateReportResponseDTO,
 } from "../dtos/createReport.dto";
+import { ReportDto } from "../dtos/Report.dto";
+import { AuthServiceClient } from "../grpc/proto/services/auth/auth_service_grpc_pb";
+import { ValidateUserRequest } from "../grpc/proto/services/auth/auth_service_pb";
 import { ReportServiceClient } from "../grpc/proto/services/report/report_service_grpc_pb";
 import { ListAllReportsRequest } from "../grpc/proto/services/report/report_service_pb";
+import { UserServiceClient } from "../grpc/proto/services/user/user_service_grpc_pb";
+import {
+  GetUserInfoRequest,
+  GetUserInfoResponse,
+} from "../grpc/proto/services/user/user_service_pb";
 
 var amqp = require("amqplib/callback_api");
 
 class ReportController {
   reportServiceGRPC: ReportServiceClient;
+  userServiceGRPC: UserServiceClient;
 
   constructor() {
     this.reportServiceGRPC = new ReportServiceClient(
       `localhost:${process.env.REPORT_SERVICE_PORT}`,
       credentials.createInsecure()
+    );
+    this.userServiceGRPC = new UserServiceClient(
+      `localhost:${process.env.USER_SERVICE_PORT}`,
+      credentials.createInsecure()
+    );
+  }
+
+  async getUserInfo(userId: string): Promise<GetUserInfoResponse | void> {
+    this.userServiceGRPC.getUserInfo(
+      new GetUserInfoRequest().setUserId(userId),
+      (error, response) => {
+        return response;
+      }
     );
   }
 
@@ -61,10 +83,19 @@ class ReportController {
       (error, response) => {
         console.log(error);
         console.log(response);
+        const reports = response.getReportsList().map(
+          (report) =>
+            new ReportDto({
+              username: "",
+              latitude: report.getLatitude(),
+              longitude: report.getLongitude(),
+              type: report.getType(),
+              description: report.getDescription(),
+              date: new Date(Date.parse(report.getReportDate())),
+            })
+        );
         res.json({
-          reports: response
-            .getReportsList()
-            .map((report) => CreateReportResponseDTO.fromProto(report)),
+          reports,
         });
       }
     );

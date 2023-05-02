@@ -56,7 +56,7 @@ const signUp = async (
   try {
     console.log(`request create user: ${call.request.toObject()}`);
     const user = await repository.save(convertToEntity(call.request));
-    const response = new SignUpResponse().setUserid(user.user_id);
+    const response = new SignUpResponse().setUserId(user.user_id);
     console.log(`response: ${response}`);
     callback(null, response);
   } catch (e) {

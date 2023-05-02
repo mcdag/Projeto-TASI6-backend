@@ -33,8 +33,8 @@ export namespace SignUpRequest {
 }
 
 export class SignUpResponse extends jspb.Message { 
-    getUserid(): string;
-    setUserid(value: string): SignUpResponse;
+    getUserId(): string;
+    setUserId(value: string): SignUpResponse;
 
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): SignUpResponse.AsObject;
@@ -48,7 +48,7 @@ export class SignUpResponse extends jspb.Message {
 
 export namespace SignUpResponse {
     export type AsObject = {
-        userid: string,
+        userId: string,
     }
 }
 
@@ -95,5 +95,80 @@ export namespace LoginResponse {
     export type AsObject = {
         userId: string,
         authToken: string,
+    }
+}
+
+export class ValidateUserRequest extends jspb.Message { 
+    getUserId(): string;
+    setUserId(value: string): ValidateUserRequest;
+    getAuthToken(): string;
+    setAuthToken(value: string): ValidateUserRequest;
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): ValidateUserRequest.AsObject;
+    static toObject(includeInstance: boolean, msg: ValidateUserRequest): ValidateUserRequest.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: ValidateUserRequest, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): ValidateUserRequest;
+    static deserializeBinaryFromReader(message: ValidateUserRequest, reader: jspb.BinaryReader): ValidateUserRequest;
+}
+
+export namespace ValidateUserRequest {
+    export type AsObject = {
+        userId: string,
+        authToken: string,
+    }
+}
+
+export class UserInfo extends jspb.Message { 
+    getUserId(): string;
+    setUserId(value: string): UserInfo;
+    getUsername(): string;
+    setUsername(value: string): UserInfo;
+    getEmail(): string;
+    setEmail(value: string): UserInfo;
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): UserInfo.AsObject;
+    static toObject(includeInstance: boolean, msg: UserInfo): UserInfo.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: UserInfo, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): UserInfo;
+    static deserializeBinaryFromReader(message: UserInfo, reader: jspb.BinaryReader): UserInfo;
+}
+
+export namespace UserInfo {
+    export type AsObject = {
+        userId: string,
+        username: string,
+        email: string,
+    }
+}
+
+export class ValidateUserResponse extends jspb.Message { 
+    getValid(): boolean;
+    setValid(value: boolean): ValidateUserResponse;
+
+    hasUserinfo(): boolean;
+    clearUserinfo(): void;
+    getUserinfo(): UserInfo | undefined;
+    setUserinfo(value?: UserInfo): ValidateUserResponse;
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): ValidateUserResponse.AsObject;
+    static toObject(includeInstance: boolean, msg: ValidateUserResponse): ValidateUserResponse.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: ValidateUserResponse, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): ValidateUserResponse;
+    static deserializeBinaryFromReader(message: ValidateUserResponse, reader: jspb.BinaryReader): ValidateUserResponse;
+}
+
+export namespace ValidateUserResponse {
+    export type AsObject = {
+        valid: boolean,
+        userinfo?: UserInfo.AsObject,
     }
 }
