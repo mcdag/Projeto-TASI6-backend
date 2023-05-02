@@ -42,27 +42,30 @@ export default class UserController {
     });
   }
 
-  // async login(req, res): Promise<void> {
-  //   const dto = new LoginRequestDTO(req.body);
+  async login(req, res): Promise<void> {
+    const dto = new LoginRequestDTO(req.body);
 
-  //   console.log(`req: ${dto.email}`);
+    console.log(`req: ${dto.username}`);
 
-  //   console.log(`Login request: ${Object.keys(dto)}`);
-  //   const loginRequest = dto.toProto();
-  //   console.log(`Login request: ${loginRequest}`);
+    console.log(`Login request: ${Object.keys(dto)}`);
+    const loginRequest = dto.toProto();
+    console.log(`Login request: ${loginRequest}`);
 
-  //   this.userServiceGRPC.createUser(loginRequest, (error, response) => {
-  //     if (error) {
-  //       switch (error.code) {
-  //         case 3:
-  //           res.status(401).send(error.message);
-  //           return;
-  //         case 13:
-  //           res.status(500).send(error.message);
-  //           return;
-  //       }
-  //     }
-  //     res.status(201).json();
-  //   });
-  // }
+    this.authServiceGRPC.login(loginRequest, (error, response) => {
+      if (error) {
+        switch (error.code) {
+          case 3:
+            res.status(401).send(error.message);
+            return;
+          case 13:
+            res.status(500).send(error.message);
+            return;
+        }
+      }
+      res.status(200).json({
+        userId: response.getUserId(),
+        authToken: response.getAuthToken(),
+      });
+    });
+  }
 }

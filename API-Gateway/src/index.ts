@@ -33,9 +33,9 @@ app.route("/user").post(async (req, res): Promise<void> => {
   userController.signUp(req, res);
 });
 
-// app.route("/login").post(async (req, res): Promise<void> => {
-//   userController.login(req, res);
-// });
+app.route("/login").post(async (req, res): Promise<void> => {
+  userController.login(req, res);
+});
 
 app.listen(PORT, () => {
   console.log(`Servidor rodando com sucesso em ${HOSTNAME}:${PORT}`);

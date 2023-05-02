@@ -12,7 +12,7 @@ const client = new UserServiceClient(
 );
 
 export class UserServiceGRPC {
-  public async signUp(
+  public async createUser(
     createUserRequest: CreateUserRequest
   ): Promise<CreateUserResponse | undefined> {
     console.log("Creating report");
