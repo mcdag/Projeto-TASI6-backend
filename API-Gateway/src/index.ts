@@ -30,7 +30,7 @@ app
     eventControler.sendEventToAllClients(req);
     reportController.createReport(req, res);
   })
-  .get(async (req, res) => reportController.listAllReports(req, res));
+  .get(async (req, res) => await reportController.listAllReports(req, res));
 
 app.route("/user").post(async (req, res): Promise<void> => {
   userController.signUp(req, res);

@@ -81,8 +81,6 @@ class ReportController {
     this.reportServiceGRPC.listAllReports(
       new ListAllReportsRequest(),
       (error, response) => {
-        console.log(error);
-        console.log(response);
         const reports = response.getReportsList().map(
           (report) =>
             new ReportDto({

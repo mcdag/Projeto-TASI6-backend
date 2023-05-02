@@ -1,12 +1,10 @@
 import { Request } from "express";
-import {
-    CreateReportResponseDTO,
-  } from "../dtos/createReport.dto";
+import { CreateReportResponseDTO } from "../dtos/createReport.dto";
 
 type IClient = {
   id: number;
   response: any;
-}
+};
 
 export default class EventController {
   clients: Array<IClient>;
@@ -16,20 +14,20 @@ export default class EventController {
   }
 
   async sendEventToAllClients(request: Request) {
-    const event = new CreateReportResponseDTO({
-        userId: request.body.userId || '',
-        reportDate: new Date(),
-        description: request.body.description || '',
-        anonymous: request.body.anonymous || true,
-        latitude: request.body.latitude || 0,
-        longitude: request.body.longitude || 0,
-        type: request.body.type || '',
-    });
+    const event = {
+      userId: request.body.userId || "",
+      reportDate: new Date(),
+      description: request.body.description || "",
+      anonymous: request.body.anonymous || true,
+      latitude: request.body.latitude || 0,
+      longitude: request.body.longitude || 0,
+      type: request.body.type || "",
+    };
 
     this.clients.forEach((client) => {
-        console.log('Sending event to client -> ', client.id);
-        const data = `data: ${JSON.stringify(event)}\n\n`;
-        client.response.write(data);
+      console.log("Sending event to client -> ", client.id);
+      const data = `data: ${JSON.stringify(event)}\n\n`;
+      client.response.write(data);
     });
   }
 
@@ -50,14 +48,14 @@ export default class EventController {
 
     const clientId = Date.now();
     const newClient: IClient = {
-        id: clientId,
-        response,
-    }
+      id: clientId,
+      response,
+    };
     this.clients.push(newClient);
-    console.log('clients -> ', this.clients.length);
+    console.log("clients -> ", this.clients.length);
     request.on("close", () => {
-        console.log(`${clientId} Connection closed`);
-        this.clients = this.clients.filter((client) => client.id !== clientId);
+      console.log(`${clientId} Connection closed`);
+      this.clients = this.clients.filter((client) => client.id !== clientId);
     });
   }
 }
