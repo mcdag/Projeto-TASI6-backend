@@ -1,4 +1,4 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Double, Entity, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity()
 export class Report {
@@ -21,8 +21,8 @@ export class Report {
   anonymous!: boolean;
 
   @Column()
-  latitude!: number;
+  latitude!: string;
 
   @Column()
-  longitude!: number;
+  longitude!: string;
 }
