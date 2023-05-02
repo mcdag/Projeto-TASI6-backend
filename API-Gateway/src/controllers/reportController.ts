@@ -73,7 +73,7 @@ class ReportController {
         connection.close();
       }, 500);
 
-      res.status(200).send({ created: true });
+      res.status(201).send({ created: true });
     });
   }
 
